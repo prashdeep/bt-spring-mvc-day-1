@@ -2,7 +2,7 @@ package com.bt.assetmgmt.controller;
 
 import com.bt.assetmgmt.model.Item;
 import com.bt.assetmgmt.service.AssetService;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +21,7 @@ public class AssetController {
 
     @PostMapping(value = "/",  produces = {APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE},
                 consumes =  {APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE})
+    @ResponseStatus(HttpStatus.CREATED)
     public Item saveItem(Item item){
         return this.assetService.save(item);
     }
