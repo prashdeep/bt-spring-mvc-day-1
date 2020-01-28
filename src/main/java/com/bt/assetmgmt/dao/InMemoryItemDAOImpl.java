@@ -7,10 +7,13 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 
 @Repository
-@Primary
 public class InMemoryItemDAOImpl implements ItemDAO {
 
-    private List<Item> itemlist = new ArrayList<>();
+    private List<Item> itemlist = new ArrayList<>(
+            Arrays.asList(Item.builder()
+                    .itemName("lenovo")
+                    .description("test")
+                    .price(22000).build()));
 
     @Override
     public Item save(Item item) {

@@ -2,6 +2,13 @@ package com.bt.assetmgmt.model;
 
 
 import lombok.*;
+import org.hibernate.validator.constraints.Range;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Setter
@@ -9,14 +16,24 @@ import java.io.Serializable;
 @ToString
 @EqualsAndHashCode(of = "itemId")
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 public class Item implements Serializable, Comparable<Item> {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long itemId;
 
+  //  @NotNull(message = "Item name cannot be blank")
+//    @Column(name = "item_name", nullable = false)
     private String itemName;
 
+  //  @Range(min = 20_000, max = 50_000)
+   // @NotNull(message = "price cannot be empty")
     private double price;
 
+   // @NotBlank(message = "Item description cannot be blank")
     private String description;
 
    /* public Item(){

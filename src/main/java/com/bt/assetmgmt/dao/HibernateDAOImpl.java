@@ -4,36 +4,48 @@ import com.bt.assetmgmt.model.Item;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository("hibernateDAO")
+@Primary
 public class HibernateDAOImpl implements ItemDAO {
 
-    @Autowired
     private SessionFactory sessionFactory;
 
+    public HibernateDAOImpl(SessionFactory sessionFactory){
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public Item save(Item item) {
-        return null;
+        Session session = this.sessionFactory.getCurrentSession();
+        session.saveOrUpdate(item);
+        return item;
     }
 
     @Override
     public List<Item> listAll() {
-        return null;
+        Session session = this.sessionFactory.getCurrentSession();
+        List items = session.createQuery("FROM Item").list();
+        return items;
     }
 
     @Override
     public Optional<Item> findById(long itemId) {
-        return Optional.empty();
+        Session session = this.sessionFactory.getCurrentSession();
+        Item item = session.find(Item.class, itemId);
+        return Optional.of(item);
     }
 
     @Override
     public void deleteItemById(long itemId) {
-
+        Session session = this.sessionFactory.getCurrentSession();
+        Item item = session.find(Item.class, itemId);
+        session.delete(item);
     }
 
 
